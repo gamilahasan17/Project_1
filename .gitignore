@@ -1,0 +1,18 @@
+# Build output
+x64/
+x86/
+Debug/
+Release/
+*.exe
+*.obj
+*.pdb
+*.ilk
+
+# Visual Studio user/project-specific files
+*.vcxproj.user
+*.vcxproj.filters
+.vs/
+
+# OS junk
+.DS_Store
+Thumbs.db
