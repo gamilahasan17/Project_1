@@ -1,13 +1,8 @@
 
-
-
-# Visual Studio build & temp folders 
 .vs/
 x64/
 Debug/
 Release/
-
-# User & project settin
 *.vcxproj.user
 *.exe
 *.obj
