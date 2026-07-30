@@ -1,0 +1,18 @@
+
+.sln/
+.vcxproj/
+.vcxproj.filters/
+.user/
+
+.vs/
+x64/
+Debug/
+Release/
+
+# User-specific Visual Studio files
+*.vcxproj.user/
+
+# Project binaries
+*.exe/
+*.obj/
+*.log/
