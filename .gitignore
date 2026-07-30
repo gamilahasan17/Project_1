@@ -1,18 +1,14 @@
 
-.sln/
-.vcxproj/
-.vcxproj.filters/
-.user/
 
+
+# Visual Studio build & temp folders 
 .vs/
 x64/
 Debug/
 Release/
 
-# User-specific Visual Studio files
-*.vcxproj.user/
-
-# Project binaries
-*.exe/
-*.obj/
-*.log/
+# User & project settin
+*.vcxproj.user
+*.exe
+*.obj
+*.log
