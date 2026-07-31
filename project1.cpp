@@ -1,10 +1,8 @@
-#define _CRT_SECURE_NO_WARNINGS  // Deprecation Warnings
 #include <iostream>
 #include<fstream>
 #include <vector>
 #include <string>
 #include <ctime>
-#include <windows.h>  //for emojies
 using namespace std;
 
 // ========================
@@ -88,64 +86,48 @@ private:
 
 public:
     Message() {
-        sender = " ";
-        content = " ";
-        timestamp = " ";
-        status = " ";
-        replyTo = nullptr;
-
+        // TODO: Implement default constructor
     }
 
     Message(string sndr, string cntnt) {
-        sender = sndr;
-        content = cntnt;
-        timestamp = getTimestamp();
-        status = "sent";
-        replyTo = nullptr;
-
+        // TODO: Implement parameterized constructor
     }
 
     string getContent() const {
-        return content;
+        // TODO: Implement getter
+        return "";
     }
 
     string getSender() const {
-        return sender;
-
+        // TODO: Implement getter
+        return "";
     }
 
     string getTimestamp() const {
-        return timestamp;
+        // TODO: Implement getter
+        return "";
     }
 
     string getStatus() const {
-        return status;
-
+        // TODO: Implement getter
+        return "";
     }
 
     Message* getReplyTo() const {
-
-        return replyTo;
+        // TODO: Implement getter
+        return nullptr;
     }
 
     void setStatus(string newStatus) {
-        status = newStatus;
-
+        // TODO: Implement setter
     }
 
     void setReplyTo(Message* msg) {
-        replyTo = msg;
-
+        // TODO: Implement setter
     }
 
     void updateTimestamp() {
-        time_t now = time(nullptr);       //the current time :seconds
-        char arr[100];
-        strftime(arr, sizeof(arr), " %Y - %m - %d %H: %M : %S", localtime(&now));
-
-
-        timestamp = string(arr);
-
+        // TODO: Implement timestamp update
     }
 
     void display() const {  //pp
@@ -162,24 +144,7 @@ public:
     }
 
     void addEmoji(string emojiCode) {
-       
-        if (emojiCode == ":)")
-            content += " 🙂";
-        else if
-            (emojiCode == ":(")
-            content += " 🙁";
-        else if
-            (emojiCode == "<3")
-            content += " ❤️";
-        else if
-            (emojiCode == ":D")
-            content += " 😀 ";
-
-        else if (emojiCode == "thumbsup")
-            content += "👍 ";
-        else
-            content += " " + emojiCode;
-    
+        // TODO: Implement emoji support
     }
 };
 
@@ -421,8 +386,6 @@ public:
 //          MAIN
 // ========================
 int main() {
-    SetConsoleOutputCP(CP_UTF8); // to find emojis
-
     WhatsApp whatsapp;
     whatsapp.run();
     return 0;
