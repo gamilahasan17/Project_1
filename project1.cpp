@@ -210,31 +210,50 @@ private:
     string description;
 
 public:
-    GroupChat(vector<string> users, string name, string creator) {
-        // TODO: Implement constructor
+    GroupChat(vector<string> users, string name, string creator)
+    : Chat(users, name) {
+        admins.push_back(creator);
     }
 
     void addAdmin(string newAdmin) {
-        // TODO: Implement add admin
+        admins.push_back(newAdmin);
     }
 
     bool removeParticipant(const string& admin, const string& userToRemove) {
-        // TODO: Implement remove participant
+        if (isParticipant(userToRemove) && !isAdmin(userToRemove) && isAdmin(admin)) {
+            for (int i = 0; i < participants.size(); i++) {
+                if (participants[i] == userToRemove) {
+                    participants.erase(participants.begin() + i);
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
     bool isAdmin(string username) const {
-        // TODO: Implement admin check
+        for (string admin: admins) {
+            if (admin == username) {
+                return true;
+            }
+        }
         return false;
     }
 
     bool isParticipant(string username) const {
-        // TODO: Implement participant check
+        for (string participant: participants) {
+            if (participant == username) {
+                return true;
+            }
+        }
         return false;
     }
 
     void setDescription(string desc) {
-        // TODO: Implement set description
+        int description_lenght = sizeof(desc) / sizeof(desc[0]);
+        if (description_lenght <= 1024 || description_lenght > 0) {
+            description = desc;
+        }
     }
 
     void displayChat() const override {
