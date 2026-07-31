@@ -274,7 +274,31 @@ public:
     WhatsApp() : currentUserIndex(-1) {}
 
     void signUp() {
-        // TODO: Implement user registration
+        string uname, pwd, phone;
+
+        cout << "Enter username: ";
+        cin >> uname;
+
+        if (findUserIndex(uname) != -1) {
+            cout << "Username already taken. Please choose another." << endl;
+            return;
+        }
+
+        cout << "Enter password (at least 6 characters): ";
+        cin >> pwd;
+
+        if (pwd.length() < 6) {
+            cout << "Password must be at least 6 characters long." << endl;
+            return;
+        }
+
+        cout << "Enter phone number: ";
+        cin >> phone;
+
+        User newUser(uname, pwd, phone);
+        users.push_back(newUser);
+
+        cout << "Account created successfully! You can now log in." << endl;
     }
 
     void login() {
