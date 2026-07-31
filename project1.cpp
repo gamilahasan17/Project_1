@@ -1,5 +1,4 @@
 #include <iostream>
-#include<fstream>
 #include <vector>
 #include <string>
 #include <ctime>
@@ -150,64 +149,33 @@ protected:
 
 public:
     Chat() {
-        participants = {};
-        messages = {};
-        chatName = "";
+        // TODO: Implement default constructor
     }
 
     Chat(vector<string> users, string name) {
-        participants = users;
-        chatName = name;
+        // TODO: Implement parameterized constructor
     }
 
     void addMessage(const Message& msg) {
-        messages.push_back(msg);
+        // TODO: Implement message addition
     }
 
     bool deleteMessage(int index, const string& username) {
-        if( index < 0 || index >= messages.size() || messages[index].getSender() != username )
-        {
-           return false;
-        }
-        else
-        {
-            messages.erase(messages.begin() + index);
-            return true;
-        }
-
+        // TODO: Implement message deletion
+        return false;
     }
 
     virtual void displayChat() const {
-        cout << "chat name : " << chatName;
-        for( const auto& msg : messages )
-        {
-            msg.display();
-        }
+        // TODO: Implement chat display
     }
 
     vector<Message> searchMessages(string keyword) const {
-        vector<Message> result;
-        for (const auto& msg : messages) {
-          if (msg.getContent().find(keyword)!= string::npos)
-              {
-                result.push_back(msg);
-              }
-            }
-        return result;
-
+        // TODO: Implement message search
+        return {};
     }
 
     void exportToFile(const string& filename) const {
-
-      ofstream file(filename);
-      if (!file.is_open())
-       return;
-      file << "Chat Name: " << chatName << endl;
-      for (const auto& msg : messages)
-                                      {
-       file << msg.getSender()<< ": "<< msg.getContent()<< endl;
-  }
-      file.close();
+        // TODO: Implement export to file
     }
 };
 
@@ -242,50 +210,31 @@ private:
     string description;
 
 public:
-    GroupChat(vector<string> users, string name, string creator)
-    : Chat(users, name) {
-        admins.push_back(creator);
+    GroupChat(vector<string> users, string name, string creator) {
+        // TODO: Implement constructor
     }
 
     void addAdmin(string newAdmin) {
-        admins.push_back(newAdmin);
+        // TODO: Implement add admin
     }
 
     bool removeParticipant(const string& admin, const string& userToRemove) {
-        if (isParticipant(userToRemove) && !isAdmin(userToRemove) && isAdmin(admin)) {
-            for (int i = 0; i < participants.size(); i++) {
-                if (participants[i] == userToRemove) {
-                    participants.erase(participants.begin() + i);
-                    return true;
-                }
-            }
-        }
+        // TODO: Implement remove participant
         return false;
     }
 
     bool isAdmin(string username) const {
-        for (string admin: admins) {
-            if (admin == username) {
-                return true;
-            }
-        }
+        // TODO: Implement admin check
         return false;
     }
 
     bool isParticipant(string username) const {
-        for (string participant: participants) {
-            if (participant == username) {
-                return true;
-            }
-        }
+        // TODO: Implement participant check
         return false;
     }
 
     void setDescription(string desc) {
-        int description_lenght = sizeof(desc) / sizeof(desc[0]);
-        if (description_lenght <= 1024 || description_lenght > 0) {
-            description = desc;
-        }
+        // TODO: Implement set description
     }
 
     void displayChat() const override {
