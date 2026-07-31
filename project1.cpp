@@ -148,7 +148,7 @@ public:
 
     }
 
-    void display() const {
+    void display() const {  //pp
         
         cout << "Sender: " << sender << endl;
         cout << "Content: " << content << endl;
