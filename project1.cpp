@@ -1,8 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS  // Deprecation Warnings
 #include <iostream>
 #include<fstream>
 #include <vector>
 #include <string>
 #include <ctime>
+#include <windows.h>  //for emojies
 using namespace std;
 
 // ========================
@@ -86,56 +88,98 @@ private:
 
 public:
     Message() {
-        // TODO: Implement default constructor
+        sender = " ";
+        content = " ";
+        timestamp = " ";
+        status = " ";
+        replyTo = nullptr;
+
     }
 
     Message(string sndr, string cntnt) {
-        // TODO: Implement parameterized constructor
+        sender = sndr;
+        content = cntnt;
+        timestamp = getTimestamp();
+        status = "sent";
+        replyTo = nullptr;
+
     }
 
     string getContent() const {
-        // TODO: Implement getter
-        return "";
+        return content;
     }
 
     string getSender() const {
-        // TODO: Implement getter
-        return "";
+        return sender;
+
     }
 
     string getTimestamp() const {
-        // TODO: Implement getter
-        return "";
+        return timestamp;
     }
 
     string getStatus() const {
-        // TODO: Implement getter
-        return "";
+        return status;
+
     }
 
     Message* getReplyTo() const {
-        // TODO: Implement getter
-        return nullptr;
+
+        return replyTo;
     }
 
     void setStatus(string newStatus) {
-        // TODO: Implement setter
+        status = newStatus;
+
     }
 
     void setReplyTo(Message* msg) {
-        // TODO: Implement setter
+        replyTo = msg;
+
     }
 
     void updateTimestamp() {
-        // TODO: Implement timestamp update
+        time_t now = time(nullptr);       //the current time :seconds
+        char arr[100];
+        strftime(arr, sizeof(arr), " %Y - %m - %d %H: %M : %S", localtime(&now));
+
+
+        timestamp = string(arr);
+
     }
 
     void display() const {
-        // TODO: Implement message display
+        
+        cout << "Sender: " << sender << endl;
+        cout << "Content: " << content << endl;
+        cout << "Timestamp: " << timestamp << endl;
+        cout << "Status: " << status << endl;
+
+        if (replyTo != nullptr) {
+            cout << "Replying to: " << (replyTo->getContent());
+
+        }
     }
 
     void addEmoji(string emojiCode) {
-        // TODO: Implement emoji support
+       
+        if (emojiCode == ":)")
+            content += " 🙂";
+        else if
+            (emojiCode == ":(")
+            content += " 🙁";
+        else if
+            (emojiCode == "<3")
+            content += " ❤️";
+        else if
+            (emojiCode == ":D")
+            content += " 😀 ";
+
+        else if (emojiCode == "thumbsup")
+            content += "👍 ";
+        else
+            content += " " + emojiCode;
+    
     }
 };
 
@@ -377,6 +421,8 @@ public:
 //          MAIN
 // ========================
 int main() {
+    SetConsoleOutputCP(CP_UTF8); // to find emojis
+
     WhatsApp whatsapp;
     whatsapp.run();
     return 0;
