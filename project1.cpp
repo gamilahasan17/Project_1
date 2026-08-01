@@ -275,7 +275,11 @@ public:
     }
 
     void sendJoinRequest(const string& username) {
-        // TODO: Implement join request
+        if (!isParticipant(username)) {
+            cout << username << " requested to join " << chatName << "." << endl;
+        }
+
+        cout << username << " is already a member in " << chatName << "!" << endl;
     }
 };
 
