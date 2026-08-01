@@ -4,7 +4,7 @@
 #include <string>
 #include <ctime>
 #include <windows.h>  //for emojies
-
+#include<fstream>
 using namespace std;
 
 // ========================
@@ -117,7 +117,7 @@ public:
 
     string getTimestamp() const {
         return timestamp;
-      
+
     }
 
     string getStatus() const {
@@ -162,7 +162,7 @@ public:
     }
 
     void addEmoji(string emojiCode) {
-        
+
         if (emojiCode == ":)")
             content += " 🙂";
         else if
@@ -179,7 +179,7 @@ public:
             content += "👍 ";
         else
             content += " " + emojiCode;
-    
+
     }
 };
 
@@ -194,33 +194,64 @@ protected:
 
 public:
     Chat() {
-        // TODO: Implement default constructor
+        participants = {};
+        messages = {};
+        chatName = "";
     }
 
     Chat(vector<string> users, string name) {
-        // TODO: Implement parameterized constructor
+        participants = users;
+        chatName = name;
     }
 
     void addMessage(const Message& msg) {
-        // TODO: Implement message addition
+        messages.push_back(msg);
     }
 
     bool deleteMessage(int index, const string& username) {
-        // TODO: Implement message deletion
-        return false;
+        if( index < 0 || index >= messages.size() || messages[index].getSender() != username )
+        {
+           return false;
+        }
+        else
+        {
+            messages.erase(messages.begin() + index);
+            return true;
+        }
+
     }
 
     virtual void displayChat() const {
-        // TODO: Implement chat display
+        cout << "chat name : " << chatName;
+        for( const auto& msg : messages )
+        {
+            msg.display();
+        }
     }
 
     vector<Message> searchMessages(string keyword) const {
-        // TODO: Implement message search
-        return {};
+        vector<Message> result;
+        for (const auto& msg : messages) {
+          if (msg.getContent().find(keyword)!= string::npos)
+              {
+                result.push_back(msg);
+              }
+            }
+        return result;
+
     }
 
     void exportToFile(const string& filename) const {
-        // TODO: Implement export to file
+
+      ofstream file(filename);
+      if (!file.is_open())
+       return;
+      file << "Chat Name: " << chatName << endl;
+      for (const auto& msg : messages)
+                                      {
+       file << msg.getSender()<< ": "<< msg.getContent()<< endl;
+  }
+      file.close();
     }
 };
 
