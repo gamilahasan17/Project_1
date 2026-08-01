@@ -257,7 +257,21 @@ public:
     }
 
     void displayChat() const override {
-        // TODO: Implement group chat display
+        cout << "===== " << chatName << " =====" << endl;
+        cout << "Description: " << description << endl;
+        cout << "Admins:" << endl;
+        for (int i = 0; i < admins.size(); i++) {
+            cout << "- " << admins[i] << endl;
+        }
+        cout << "Participants:" << endl;
+        for (string participant: participants) {
+            cout << "- " << participant << endl;
+        }
+
+        cout << "Messages:" << endl;
+        for (Message message: messages) {
+            message.display();
+        }
     }
 
     void sendJoinRequest(const string& username) {
