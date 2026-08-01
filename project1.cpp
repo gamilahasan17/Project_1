@@ -447,12 +447,7 @@ public:
     }
 
     void logout() {
-        if (!isLoggedIn) {
-            cout << " no user is current logged in " << endl;
-
-        }
-        return currentUserIndex = -1;
-
+       // TODO: Implement logout
     }
 
     void run() {
