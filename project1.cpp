@@ -20,9 +20,9 @@ private:
 
 public:
     User() {
-        username = "";
-        password = "";
-        phoneNumber = "";
+        username = " ";
+        password = " ";
+        phoneNumber = " ";
         status = "Offline";
         time_t now = time(0);
         lastSeen = ctime(&now);
@@ -395,8 +395,10 @@ private:
     }
 
     string getCurrentUsername() const {
-        // TODO: Implement get current user
-        return "";
+        if (currentUserIndex != -1) {
+            return users[currentUserIndex].getUsername();
+        }
+        
     }
 
 public:
@@ -435,24 +437,71 @@ public:
     }
 
     void startPrivateChat() {
-        // TODO: Implement private chat creation
+        string targetUsername;
+        cout << "Enter username to chat with: ";
+        cin >> targetUsername;
+
+        int targetIndex = findUserIndex(targetUsername);
+
+        if (targetIndex == -1) {
+            cout << "User not found!\n";
+            return;
+
+        }
+
+        Chat* newChat = new PrivateChat(users[currentUserIndex].getUsername(), users[targetIndex].getUsername());
+        chats.push_back(newChat);
+
+        cout << "Private chat started with " << targetUsername << "!\n";
     }
 
     void createGroup() {
-        // TODO: Implement group creation
-    }
+        string groupName;
+        cout << "Enter group name: ";
+        cin >> groupName;
 
+        vector<string> groupMembers;
+        groupMembers.push_back(getCurrentUsername());
+
+        string memberUsername;
+        cout << "Enter member usernames (type 'done' to finish):\n";
+        while (true) {
+            cout << "Add member: ";
+            cin >> memberUsername;
+            if (memberUsername == "done") {
+                break;
+            }
+
+            int idx = findUserIndex(memberUsername);
+            if (idx != -1) {
+                groupMembers.push_back(memberUsername);
+                cout << memberUsername << " added to group.\n";
+            }
+            else {
+                cout << "User not found!\n";
+            }
+        }
+
+        Chat* newGroup = new GroupChat(groupMembers, groupName, getCurrentUsername());
+        chats.push_back(newGroup);
+
+        cout << "Group '" << groupName << "' created successfully!\n";
+    }
     void viewChats() const {
-        // TODO: Implement chat viewing
+        if (chats.empty()) {
+            cout << "No chats available.\n";
+            return;
+        }
+
+        cout << "\n--- YOUR CHATS ---\n";
+        for (size_t i = 0; i < chats.size(); ++i) {
+            cout << i + 1 << ". ";
+            chats[i]->displayChat();
+        }
     }
 
     void logout() {
-        if (!isLoggedIn) {
-            cout << " no user is current logged in " << endl;
-
-        }
-        return currentUserIndex = -1;
-
+        // TODO: Implement logout
     }
 
     void run() {
