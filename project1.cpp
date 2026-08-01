@@ -117,7 +117,7 @@ public:
 
     string getTimestamp() const {
         return timestamp;
-      
+
     }
 
     string getStatus() const {
@@ -162,7 +162,7 @@ public:
     }
 
     void addEmoji(string emojiCode) {
-        
+
         if (emojiCode == ":)")
             content += " 🙂";
         else if
@@ -179,7 +179,7 @@ public:
             content += "👍 ";
         else
             content += " " + emojiCode;
-    
+
     }
 };
 
@@ -314,7 +314,11 @@ private:
     int currentUserIndex;
 
     int findUserIndex(string username) const {
-        // TODO: Implement user search
+      for (int i = 0; i < (int)users.size(); i++) {
+            if (users[i].getUsername() == username) {
+                return i;
+            }
+        }
         return -1;
     }
 
