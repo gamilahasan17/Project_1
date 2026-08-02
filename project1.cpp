@@ -518,8 +518,9 @@ public:
     void logout() {
         if (!isLoggedIn()) {
             cout << " no user is current logged in " << endl;
+        }
+        currentUserIndex = -1;
     }
-
     void run() {
         while (true) {
             if (!isLoggedIn()) {
