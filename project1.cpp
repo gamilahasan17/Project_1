@@ -363,7 +363,7 @@ public:
     }
 
     void logout() {
-        if (!isLoggedIn) {
+        if (!isLoggedIn()) {
             cout << " no user is current logged in " << endl;
 
         }
