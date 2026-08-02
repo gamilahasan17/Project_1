@@ -478,24 +478,9 @@ public:
         vector<string> groupMembers;
         groupMembers.push_back(getCurrentUsername());
 
-        string memberUsername;
-        cout << "Enter member usernames (type 'done' to finish):\n";
-        while (true) {
-            cout << "Add member: ";
-            cin >> memberUsername;
-            if (memberUsername == "done") {
-                break;
-            }
-
-            int idx = findUserIndex(memberUsername);
-            if (idx != -1) {
-                groupMembers.push_back(memberUsername);
-                cout << memberUsername << " added to group.\n";
-            }
-            else {
-                cout << "User not found!\n";
-            }
-        }
+    void logout() {
+        if (!isLoggedIn()) {
+            cout << " no user is current logged in " << endl;
 
         Chat* newGroup = new GroupChat(groupMembers, groupName, getCurrentUsername());
         chats.push_back(newGroup);
@@ -507,6 +492,8 @@ public:
             cout << "No chats available.\n";
             return;
         }
+     
+        currentUserIndex = -1;
 
         cout << "\n--- YOUR CHATS ---\n";
         for (size_t i = 0; i < chats.size(); ++i) {
