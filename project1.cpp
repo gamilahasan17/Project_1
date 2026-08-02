@@ -367,7 +367,8 @@ public:
             cout << " no user is current logged in " << endl;
 
         }
-        return currentUserIndex = -1;
+     
+        currentUserIndex = -1;
 
     }
 
