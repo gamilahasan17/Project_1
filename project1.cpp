@@ -503,7 +503,8 @@ public:
     }
 
     void logout() {
-        // TODO: Implement logout
+        if (!isLoggedIn()) {
+            cout << " no user is current logged in " << endl;
     }
 
     void run() {
