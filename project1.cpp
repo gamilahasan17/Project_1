@@ -398,7 +398,7 @@ private:
         if (currentUserIndex != -1) {
             return users[currentUserIndex].getUsername();
         }
-        
+
     }
 
 public:
@@ -433,7 +433,22 @@ public:
     }
 
     void login() {
-        // TODO: Implement user login
+        string uname , pwd;
+        cout << "Enter the username : ";
+        cin >> uname;
+        cout << "Enter the password : ";
+        cin >> pwd;
+        int index = findUserIndex(uname);
+        if (index == -1)
+        {
+            cout << "User not found" << endl;
+        }
+        if (!users[index].checkPassword(pwd))
+        {
+            cout << "Incorrect password" << endl;
+        }
+        currentUserIndex = index;
+        cout << "Login successful, welcome back" << users[index].getUsername() << "!" << endl;
     }
 
     void startPrivateChat() {
