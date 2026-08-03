@@ -310,7 +310,7 @@ public:
 
     bool removeParticipant(const string& admin, const string& userToRemove) {
         if (isParticipant(userToRemove) && !isAdmin(userToRemove) && isAdmin(admin)) {
-            for (int i = 0; i < participants.size(); i++) {
+            for (int i = 0; i < (int)participants.size(); i++) {
                 if (participants[i] == userToRemove) {
                     participants.erase(participants.begin() + i);
                     return true;
@@ -349,8 +349,8 @@ public:
         cout << "===== " << chatName << " =====" << endl;
         cout << "Description: " << description << endl;
         cout << "Admins:" << endl;
-        for (int i = 0; i < admins.size(); i++) {
-            cout << "- " << admins[i] << endl;
+        for (string admin: admins) {
+            cout << "- " << admin << endl;
         }
         cout << "Participants:" << endl;
         for (string participant: participants) {
