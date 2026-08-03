@@ -398,7 +398,7 @@ private:
         if (currentUserIndex != -1) {
             return users[currentUserIndex].getUsername();
         }
-
+        return "";
     }
 
 public:
