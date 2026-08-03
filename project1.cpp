@@ -443,12 +443,15 @@ public:
         {
             cout << "User not found" << endl;
         }
-        if (!users[index].checkPassword(pwd))
+        else if (!users[index].checkPassword(pwd))
         {
             cout << "Incorrect password" << endl;
         }
-        currentUserIndex = index;
-        cout << "Login successful, welcome back " << users[index].getUsername() << "!" << endl;
+        else{
+              currentUserIndex = index;
+        cout << "Login successful, welcome back " << users[index].getUsername() << " !" << endl;
+        }
+
     }
 
     void startPrivateChat() {
