@@ -448,7 +448,7 @@ public:
             cout << "Incorrect password" << endl;
         }
         currentUserIndex = index;
-        cout << "Login successful, welcome back " << users[index].getUsername() << "!" << endl;
+        cout << "Login successful, welcome back " << users[index].getUsername() << " !" << endl;
     }
 
     void startPrivateChat() {
