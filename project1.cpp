@@ -199,6 +199,8 @@ public:
         chatName = "";
     }
 
+    virtual ~Chat() = default;
+
     Chat(vector<string> users, string name) {
         participants = users;
         chatName = name;
@@ -221,7 +223,7 @@ public:
 
     }
 
-    bool isParticipant(const string& username) const {
+    bool isParticipant(const string& username) const { //added this as public method from groupChat class so WhatsApp can check it 
         for (const string& p : participants) {
             if (p == username) {
                 return true;
@@ -412,6 +414,12 @@ private:
 
 public:
     WhatsApp() : currentUserIndex(-1) {}
+
+	~WhatsApp() { //destructor to prevent memory leaks
+        for (Chat* c : chats) {
+            delete c;
+        }
+    }
 
     void signUp() {
         string uname, pwd, phone;
