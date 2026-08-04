@@ -3,9 +3,13 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include <windows.h>  //for emojies
 #include<fstream>
 using namespace std;
+
+enum ChatType {
+  PRIVATE_CHAT,
+  GROUP_CHAT
+};
 
 // ========================
 //       USER CLASS
@@ -191,6 +195,7 @@ protected:
     vector<string> participants;
     vector<Message> messages;
     string chatName;
+    ChatType type;
 
 public:
     Chat() {
@@ -204,6 +209,14 @@ public:
     Chat(vector<string> users, string name) {
         participants = users;
         chatName = name;
+    }
+
+    ChatType getType() const {
+        return type;
+    }
+
+    string getChatName() const {
+        return chatName;
     }
 
     void addMessage(const Message& msg) {
@@ -281,6 +294,7 @@ public:
         participants.push_back(u1);
         participants.push_back(u2);
         chatName = "Chat between " + u1 + " and " + u2;
+        type = PRIVATE_CHAT;
     }
 
 
@@ -313,6 +327,7 @@ public:
      GroupChat(vector<string> users, string name, string creator)
     : Chat(users, name) {
         admins.push_back(creator);
+        type = GROUP_CHAT;
     }
 
     void addAdmin(string newAdmin) {
@@ -320,7 +335,7 @@ public:
     }
 
     bool removeParticipant(const string& admin, const string& userToRemove) {
-        if (isParticipant(userToRemove) && !isAdmin(userToRemove) && isAdmin(admin)) {
+        if (isParticipant(userToRemove) && !isAdmin(userToRemove) ) {
             for (int i = 0; i < (int)participants.size(); i++) {
                 if (participants[i] == userToRemove) {
                     participants.erase(participants.begin() + i);
@@ -349,11 +364,13 @@ public:
         return false;
     }
 
-    void setDescription(string desc) {
-        int description_lenght = sizeof(desc) / sizeof(desc[0]);
-        if (description_lenght <= 1024 || description_lenght > 0) {
+    bool setDescription(string desc) {
+        if (desc.length() > 0 && desc.length() <= 1024) {
             description = desc;
+            return true;
         }
+
+        return false;
     }
 
     void displayChat() const override {
@@ -377,9 +394,9 @@ public:
     void sendJoinRequest(const string& username) {
         if (!isParticipant(username)) {
             cout << username << " requested to join " << chatName << "." << endl;
+        } else {
+            cout << username << " is already a member in " << chatName << "!" << endl;
         }
-
-        cout << username << " is already a member in " << chatName << "!" << endl;
     }
 };
 
@@ -528,6 +545,78 @@ public:
         cout << "Group '" << groupName << "' created successfully!\n";
     }
 
+    void manageGroup() {
+        string groupName;
+        cout << "Enter group name: ";
+        cin >> groupName;
+    
+        GroupChat* group = nullptr;
+        for (int i = 0; i < (int)chats.size(); i++) {
+            if (chats[i]->getType() == GROUP_CHAT && chats[i]->getChatName() == groupName) {
+                group = (GroupChat*)chats[i];
+            }
+        }
+        
+        if (group == nullptr) {
+            cout << "Group not found!" << endl;
+            return;
+        }
+        
+        string currentUser = getCurrentUsername();
+
+        if (!group->isAdmin(currentUser)) {
+            cout << "Only admins can manage group!" << endl;
+            return;
+        }
+    
+        if (!group->isParticipant(currentUser)) {
+            group->sendJoinRequest(currentUser);
+            return;
+        }
+    
+        cout << "\n1. Add Admin\n2. Remove Participant\n3. Set Description\nChoice: ";
+        int choice;
+        cin >> choice;
+    
+        if (choice == 1) {
+            string newAdmin;
+            cout << "Enter username: ";
+            cin >> newAdmin;
+            if (group->isParticipant(newAdmin)) {
+                if (!group->isAdmin(newAdmin)) {
+                    group->addAdmin(newAdmin);
+                    cout << newAdmin << " is now an admin." << endl;
+                } else {
+                    cout << "User is already admin in this group!" << endl;
+                }
+            }
+            else {
+                cout << "User is not in this group!" << endl;
+            }
+        }
+        else if (choice == 2) {
+            string target;
+            cout << "Enter username: ";
+            cin >> target;
+            if (group->removeParticipant(currentUser, target)) {
+                cout << target << " removed from the group." << endl;
+            } else {
+                cout << "Could not remove user." << endl;
+            }
+        }
+        else if (choice == 3) {
+            string desc;
+            cout << "Enter description: ";
+            cin.ignore();
+            getline(cin, desc);
+            if (group->setDescription(desc)) {
+                cout << "Description updated." << endl;                
+            } else {
+                cout << "Description must be between 1-1024 characters!";
+            }
+        }
+    }
+
     void viewChats() const {
         string currentUser = getCurrentUsername();
         bool foundAny = false;
@@ -568,14 +657,15 @@ public:
                 else if (choice == 3) break;
             }
             else {
-                cout << "\n1. Start Private Chat\n2. Create Group\n3. View Chats\n4. Logout\nChoice: ";
+                cout << "\n1. Start Private Chat\n2. Create Group\n3. Manage Group\n4. View Chats\n5. Logout\nChoice: ";
                 int choice;
                 cin >> choice;
 
                 if (choice == 1) startPrivateChat();
                 else if (choice == 2) createGroup();
-                else if (choice == 3) viewChats();
-                else if (choice == 4) logout();
+                else if (choice == 3) manageGroup();
+                else if (choice == 4) viewChats();
+                else if (choice == 5) logout();
             }
         }
     }
@@ -585,8 +675,6 @@ public:
 //          MAIN
 // ========================
 int main() {
-    SetConsoleOutputCP(CP_UTF8); // to find emojis
-
     WhatsApp whatsapp;
     whatsapp.run();
     return 0;
