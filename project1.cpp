@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <ctime>
+#include <windows.h>  //for emojies
 #include<fstream>
 using namespace std;
 
@@ -545,7 +546,7 @@ public:
         cout << "Group '" << groupName << "' created successfully!\n";
     }
 
-    void manageGroup() {
+    void manaGroup() {
         string groupName;
         cout << "Enter group name: ";
         cin >> groupName;
@@ -675,6 +676,8 @@ public:
 //          MAIN
 // ========================
 int main() {
+    SetConsoleOutputCP(CP_UTF8); // to find emojis
+
     WhatsApp whatsapp;
     whatsapp.run();
     return 0;
