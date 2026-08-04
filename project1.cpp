@@ -449,7 +449,7 @@ public:
         }
         else{
               currentUserIndex = index;
-        cout << "Login successful, welcome back " << users[index].getUsername() << " !" << endl;
+        cout << "Login successful, welcome back " << users[index].getUsername() << "!" << endl;
         }
 
     }
@@ -500,11 +500,17 @@ public:
             }
         }
 
+        if (groupMembers.size() < 2) {
+            cout << "A group needs at least 2 participants. Group not created.\n";
+            return;
+        }
+
         Chat* newGroup = new GroupChat(groupMembers, groupName, getCurrentUsername());
         chats.push_back(newGroup);
 
         cout << "Group '" << groupName << "' created successfully!\n";
     }
+
     void viewChats() const {
         if (chats.empty()) {
             cout << "No chats available.\n";
