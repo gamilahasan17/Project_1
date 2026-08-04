@@ -211,7 +211,7 @@ public:
     }
 
     bool deleteMessage(int index, const string& username) {
-        if( index < 0 || index >= messages.size() || messages[index].getSender() != username )
+        if( index < 0 || index >= (int)messages.size() || messages[index].getSender() != username )
         {
            return false;
         }
@@ -350,8 +350,7 @@ public:
     }
 
     void setDescription(string desc) {
-        int description_lenght = sizeof(desc) / sizeof(desc[0]);
-        if (description_lenght <= 1024 || description_lenght > 0) {
+        if (desc.length() <= 1024) {
             description = desc;
         }
     }
@@ -378,8 +377,9 @@ public:
         if (!isParticipant(username)) {
             cout << username << " requested to join " << chatName << "." << endl;
         }
-
-        cout << username << " is already a member in " << chatName << "!" << endl;
+        else {
+            cout << username << " is already a member in " << chatName << "!" << endl;
+        }
     }
 };
 
