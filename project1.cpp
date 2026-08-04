@@ -221,6 +221,15 @@ public:
 
     }
 
+    bool isParticipant(const string& username) const {
+        for (const string& p : participants) {
+            if (p == username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     virtual void displayChat() const {
         cout << "chat name : " << chatName;
         for( const auto& msg : messages )
@@ -512,15 +521,24 @@ public:
     }
 
     void viewChats() const {
-        if (chats.empty()) {
-            cout << "No chats available.\n";
-            return;
+        string currentUser = getCurrentUsername();
+        bool foundAny = false;
+        int displayIndex = 1;
+
+        for (size_t i = 0; i < chats.size(); ++i) {
+            if (chats[i]->isParticipant(currentUser)) {
+                if (!foundAny) {
+                    cout << "\n--- YOUR CHATS ---\n";
+                }
+                cout << displayIndex << ". ";
+                chats[i]->displayChat();
+                displayIndex++;
+                foundAny = true;
+            }
         }
 
-        cout << "\n--- YOUR CHATS ---\n";
-        for (size_t i = 0; i < chats.size(); ++i) {
-            cout << i + 1 << ". ";
-            chats[i]->displayChat();
+        if (!foundAny) {
+            cout << "No chats available.\n";
         }
     }
 
